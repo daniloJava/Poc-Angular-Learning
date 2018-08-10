@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Cliente } from '../cliente';
-import { CLIENTES } from '../mock-clientes';
 import { ClienteService } from '../cliente.service';
 
 @Component({
@@ -9,7 +9,6 @@ import { ClienteService } from '../cliente.service';
   styleUrls: ['./clientes.component.css']
 })
 export class ClientesComponent implements OnInit {
-  selectedCliente: Cliente;
   clientes: Cliente[];
 
   constructor(private clienteService: ClienteService) { }
@@ -18,13 +17,23 @@ export class ClientesComponent implements OnInit {
     this.getClientes();
   }
 
-  onSelect(cliente: Cliente): void {
-    this.selectedCliente = cliente;
-  }
-
   getClientes(): void {
     this.clienteService.getClientes()
       .subscribe(clientes => this.clientes = clientes);
+  }
+
+  add(nome: string): void {
+    nome = nome.trim();
+    if (!nome) { return; }
+    this.clienteService.addCliente({ nome } as Cliente)
+      .subscribe(cliente => {
+        this.clientes.push(cliente);
+      });
+  }
+
+  delete(cliente: Cliente): void {
+    this.clientes = this.clientes.filter(h => h !== cliente);
+    this.clienteService.deleteCliente(cliente).subscribe();
   }
 
 }

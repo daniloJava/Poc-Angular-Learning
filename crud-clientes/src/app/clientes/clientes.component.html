@@ -1,9 +1,21 @@
-
 <h2>Meus Clientes</h2>
+
+<div>
+  <label>Cliente name:
+    <input #clienteName />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(clienteName.value); clienteName.value=''">
+    add
+  </button>
+</div>
+
 <ul class="heroes">
-  <li *ngFor="let cliente of clientes" (click)="onSelect(cliente)" [class.selected]="hero === selectedHero">
-    <span class="badge">{{cliente.id}}</span> {{cliente.nome}}
+  <li *ngFor="let cliente of clientes">
+    <a routerLink="/detail/{{cliente.id}}">
+      <span class="badge">{{cliente.id}}</span> {{cliente.nome}}
+    </a>
+    <button class="delete" title="delete cliente"
+      (click)="delete(cliente)">x</button>
   </li>
 </ul>
-
-<app-cliente-detail [cliente]="selectedCliente"></app-cliente-detail>

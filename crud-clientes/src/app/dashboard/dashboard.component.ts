@@ -9,9 +9,9 @@ import { ClienteService } from '../cliente.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  clientes: Cliente[];
+clientes: Cliente[];
 
-  constructor(private clienteService: ClienteService) { }
+constructor(private clienteService: ClienteService) { }
 
   ngOnInit() {
     this.getClientes();
@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
 
   getClientes(): void {
     this.clienteService.getClientes()
-      .subscribe(clientes => this.clientes = clientes.slice(1, 5));
+    .subscribe(clientes => this.clientes = clientes.slice(1, 5));
   }
 
 }
